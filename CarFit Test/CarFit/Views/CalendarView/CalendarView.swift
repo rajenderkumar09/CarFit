@@ -29,6 +29,7 @@ class CalendarView: UIView {
         self.daysCollectionView.register(nib, forCellWithReuseIdentifier: self.cellID)
         self.daysCollectionView.delegate = self
         self.daysCollectionView.dataSource = self
+		self.daysCollectionView.scrollToItem(at: calendarViewModel.selectedIndexPath, at: .left, animated: true)
     }
     
     //MARK:- Change month when left and right arrow button tapped
@@ -56,7 +57,7 @@ extension CalendarView: UICollectionViewDataSource, UICollectionViewDelegate {
 		cell.dayCellViewModel = dayCellViewModel
 
 		//Check for selected Date
-		cell.isSelected = dayCellViewModel.cellDate == calendarViewModel.selectedDate
+		cell.isSelected = dayCellViewModel.cellDate == calendarViewModel.dateSelected
 
         return cell
     }
@@ -65,8 +66,10 @@ extension CalendarView: UICollectionViewDataSource, UICollectionViewDelegate {
 		guard let cell = collectionView.cellForItem(at: indexPath) as? DayCell else {
 			return
 		}
-		cell.isSelected = true
-		calendarViewModel.updateSelectedDate(date: cell.dayCellViewModel.cellDate)
+		calendarViewModel.updateSelectedDate(date: cell.dayCellViewModel.cellDate) { (dateString) in
+			self.delegate?.getSelectedDate(dateString)
+			collectionView.reloadData()
+		}
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {

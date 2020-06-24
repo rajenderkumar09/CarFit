@@ -7,8 +7,8 @@
             "homeBobEmployeeId": "85f99bd7-ffd2-4ca7-1174-08d7984a4cf3",
             "houseOwnerId": "4ad40a8b-8c55-45a3-9b81-b87527f5cf93",
             "isBlocked": false,
-            "startTimeUtc": "2020-05-28T08:05:00",
-            "endTimeUtc": "2020-05-28T08:35:00",
+            "startTimeUtc": "2020-06-24T08:05:00",
+            "endTimeUtc": "2020-06-24T08:35:00",
             "title": "Add title",
             "isReviewed": false,
             "isFirstVisit": false,
@@ -37,8 +37,8 @@
                     "timesInMinutes": 25,
                     "price": 99.00,
                     "paymentTypeId": "51d14bdf-8d83-49fa-843d-787ceba4bb40",
-                    "createDateUtc": "2020-05-28T20:01:56.8831511",
-                    "lastUpdateDateUtc": "2020-05-28T20:01:56.8831539",
+                    "createDateUtc": "2020-06-24T20:01:56.8831511",
+                    "lastUpdateDateUtc": "2020-06-24T20:01:56.8831539",
                     "paymentTypes": null
                 },
                 {
@@ -48,8 +48,8 @@
                     "timesInMinutes": 35,
                     "price": 199.00,
                     "paymentTypeId": "9f40509b-191d-4c61-946e-0e816b63088d",
-                    "createDateUtc": "2020-05-28T20:01:26.2182451",
-                    "lastUpdateDateUtc": "2020-05-28T20:01:26.2182775",
+                    "createDateUtc": "2020-06-24T20:01:26.2182451",
+                    "lastUpdateDateUtc": "2020-06-24T20:01:26.2182775",
                     "paymentTypes": null
                 }
             ],
@@ -62,8 +62,8 @@
             "homeBobEmployeeId": "85f99bd7-ffd2-4ca7-1174-08d7984a4cf3",
             "houseOwnerId": "8572e4a1-bb98-48b8-a4ae-4411d2e6b39b",
             "isBlocked": false,
-            "startTimeUtc": "2020-05-28T08:40:00",
-            "endTimeUtc": "2020-05-28T09:10:00",
+            "startTimeUtc": "2020-06-24T08:40:00",
+            "endTimeUtc": "2020-06-24T09:10:00",
             "title": "Add title",
             "isReviewed": false,
             "isFirstVisit": false,
@@ -92,8 +92,8 @@
                     "timesInMinutes": 45,
                     "price": 199.00,
                     "paymentTypeId": "9f40509b-191d-4c61-946e-0e816b63088d",
-                    "createDateUtc": "2020-05-28T20:03:18.9444727",
-                    "lastUpdateDateUtc": "2020-05-28T20:03:18.9444755",
+                    "createDateUtc": "2020-06-24T20:03:18.9444727",
+                    "lastUpdateDateUtc": "2020-06-24T20:03:18.9444755",
                     "paymentTypes": null
                 }
             ],
@@ -282,8 +282,8 @@
             "homeBobEmployeeId": "85f99bd7-ffd2-4ca7-1174-08d7984a4cf3",
             "houseOwnerId": "9f2efc9b-c275-474c-aec9-4f9bd063b46a",
             "isBlocked": false,
-            "startTimeUtc": "2020-05-28T09:15:00",
-            "endTimeUtc": "2020-05-28T09:40:00",
+            "startTimeUtc": "2020-06-24T09:15:00",
+            "endTimeUtc": "2020-06-24T09:40:00",
             "title": "Add title",
             "isReviewed": false,
             "isFirstVisit": false,
@@ -312,8 +312,8 @@
                     "timesInMinutes": 35,
                     "price": 175.00,
                     "paymentTypeId": "9f40509b-191d-4c61-946e-0e816b63088d",
-                    "createDateUtc": "2020-05-28T20:04:07.3063091",
-                    "lastUpdateDateUtc": "2020-05-28T20:04:07.3063118",
+                    "createDateUtc": "2020-06-24T20:04:07.3063091",
+                    "lastUpdateDateUtc": "2020-06-24T20:04:07.3063118",
                     "paymentTypes": null
                 }
             ],

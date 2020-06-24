@@ -10,7 +10,7 @@ import Foundation
 
 extension Date {
 
-	func numberOfDays() -> Int {
+	func daysInMonth() -> Int {
 		let calendar = Calendar.current
 		let range = calendar.range(of: .day, in: .month, for: self)!
 		let numDays = range.count
@@ -30,7 +30,12 @@ extension Date {
 		return Calendar.current.date(byAdding: dateComp, to: self)!
 	}
 
-	func startDate(calendar:Calendar = Calendar.current) -> Date {
+	func datePart(calendar:Calendar = Calendar.current) -> Date {
+		let dateComp = calendar.dateComponents([.year, .month,.day], from: self)
+		return calendar.date(from: dateComp)!
+	}
+
+	func startDateOfMonth(calendar:Calendar = Calendar.current) -> Date {
 		var dateComp = calendar.dateComponents([.year, .month,.day], from: self)
 		dateComp.day = 1
 		return calendar.date(from: dateComp)!

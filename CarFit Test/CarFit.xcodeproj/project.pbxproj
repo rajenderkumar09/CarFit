@@ -43,6 +43,8 @@
 		9A1E7F7724A1187000401146 /* HouseOwnerAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1E7F7624A1187000401146 /* HouseOwnerAsset.swift */; };
 		9A1E7F7924A1189300401146 /* VisitAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1E7F7824A1189300401146 /* VisitAsset.swift */; };
 		9A1E7F7B24A118C800401146 /* VisitMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1E7F7A24A118C800401146 /* VisitMessage.swift */; };
+		9A727FC924A359DF0050D731 /* CarFit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A727FC824A359DF0050D731 /* CarFit.swift */; };
+		9A727FCB24A35F810050D731 /* HomeCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A727FCA24A35F810050D731 /* HomeCellViewModel.swift */; };
 		9A76CF9624A21306009246FB /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A76CF9524A21306009246FB /* Date+Extensions.swift */; };
 		9A76CF9824A218A4009246FB /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A76CF9724A218A4009246FB /* String+Extensions.swift */; };
 		9A76CF9A24A21BE3009246FB /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A76CF9924A21BE3009246FB /* CalendarViewModel.swift */; };
@@ -109,6 +111,8 @@
 		9A1E7F7624A1187000401146 /* HouseOwnerAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HouseOwnerAsset.swift; sourceTree = "<group>"; };
 		9A1E7F7824A1189300401146 /* VisitAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitAsset.swift; sourceTree = "<group>"; };
 		9A1E7F7A24A118C800401146 /* VisitMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitMessage.swift; sourceTree = "<group>"; };
+		9A727FC824A359DF0050D731 /* CarFit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarFit.swift; sourceTree = "<group>"; };
+		9A727FCA24A35F810050D731 /* HomeCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellViewModel.swift; sourceTree = "<group>"; };
 		9A76CF9524A21306009246FB /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		9A76CF9724A218A4009246FB /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		9A76CF9924A21BE3009246FB /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
@@ -278,6 +282,7 @@
 			isa = PBXGroup;
 			children = (
 				9A1E7F6E24A1134500401146 /* CalendarListViewModel.swift */,
+				9A727FCA24A35F810050D731 /* HomeCellViewModel.swift */,
 				9A76CF9924A21BE3009246FB /* CalendarViewModel.swift */,
 				9A76CF9B24A22E9C009246FB /* DayCellViewModel.swift */,
 			);
@@ -288,6 +293,7 @@
 			isa = PBXGroup;
 			children = (
 				9A1E7F7224A1143D00401146 /* CarWashVisit.swift */,
+				9A727FC824A359DF0050D731 /* CarFit.swift */,
 				9A1E7F7424A1147700401146 /* Task.swift */,
 				9A1E7F7624A1187000401146 /* HouseOwnerAsset.swift */,
 				9A1E7F7824A1189300401146 /* VisitAsset.swift */,
@@ -445,6 +451,7 @@
 				620DDEEB247E779700BBF31C /* CalendarView.swift in Sources */,
 				9A1E7F7B24A118C800401146 /* VisitMessage.swift in Sources */,
 				9A1E7F7324A1143D00401146 /* CarWashVisit.swift in Sources */,
+				9A727FCB24A35F810050D731 /* HomeCellViewModel.swift in Sources */,
 				9A76CF9C24A22E9C009246FB /* DayCellViewModel.swift in Sources */,
 				620DDEEF247E77A600BBF31C /* App+Extensions.swift in Sources */,
 				9A76CF9824A218A4009246FB /* String+Extensions.swift in Sources */,
@@ -453,6 +460,7 @@
 				9A1E7F7724A1187000401146 /* HouseOwnerAsset.swift in Sources */,
 				9A1E7F7924A1189300401146 /* VisitAsset.swift in Sources */,
 				9A76CF9624A21306009246FB /* Date+Extensions.swift in Sources */,
+				9A727FC924A359DF0050D731 /* CarFit.swift in Sources */,
 				620DDEB0247E773C00BBF31C /* AppDelegate.swift in Sources */,
 				620DDEFD247E782500BBF31C /* HomeViewController.swift in Sources */,
 				620DDEEA247E779700BBF31C /* DayCell.swift in Sources */,

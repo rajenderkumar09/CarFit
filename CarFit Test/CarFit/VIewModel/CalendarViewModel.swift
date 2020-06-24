@@ -9,8 +9,12 @@
 import Foundation
 
 class CalendarViewModel {
-	private var date = Date()
-	var selectedDate = Date()
+	private var date = Date().datePart()
+	private var selectedDate: Date
+
+	init() {
+		self.selectedDate = date
+	}
 
 	private var year:Int {
 		return Calendar.current.component(.year, from: date)
@@ -23,7 +27,7 @@ class CalendarViewModel {
 	}
 
 	var numberOfDays:Int {
-		return date.numberOfDays()
+		return date.daysInMonth()
 	}
 
 	var monthAndYear:String? {
@@ -45,12 +49,17 @@ class CalendarViewModel {
 		if newDate.isCurrentMonth  {
 			self.date = Date()
 		} else {
-			self.date = newDate.startDate()
+			self.date = newDate.startDateOfMonth()
 		}
 	}
-	
+
+	var dateSelected:Date {
+		self.selectedDate
+	}
+
 	//Intent(s)
-	func updateSelectedDate(date:Date) {
+	func updateSelectedDate(date:Date, didChangedSelectedDate:(_ date:String) -> Void) {
 		self.selectedDate = date
+		didChangedSelectedDate(date.toString(format: "yyyy-MM-dd"))
 	}
 }

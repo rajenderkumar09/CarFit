@@ -9,76 +9,36 @@
 import Foundation
 import CoreLocation
 
-struct CalendarListViewModel {
-	private let carWashVisit:CarWashVisit
+class CalendarListViewModel {
+	private var carFit:CarFit = CalendarListViewModel.loadData()
+	private let visits:[HomeCellViewModel]
 
-	init(visit:CarWashVisit) {
-		self.carWashVisit = visit
-	}
-
-	var houseOwnerName:String? {
-		if let firstName = carWashVisit.houseOwnerFirstName {
-			if let lastName = carWashVisit.houseOwnerLastName {
-				return "\(firstName) \(lastName)"
+	init(date:String) {
+		let visits = self.carFit.data.filter { (visit) -> Bool in
+			if let dateString = visit.startTimeUtc, let visitDate = dateString.date(format: "yyyy-MM-dd'T'hh:mm:ss") {
+				return date == visitDate.toString(format: "yyyy-MM-dd")
 			}
-			return "\(firstName)"
+			return false
 		}
-		return nil
+		self.visits = visits.map({return HomeCellViewModel(visit: $0)})
 	}
 
-	var visitState:String? {
-		return carWashVisit.visitState
-	}
-
-	var startTime:String? {
-		let dateFormatter = DateFormatter()
-		dateFormatter.dateFormat = "yyyy-MM-dd'T'hh:mm:ss"
-		guard let published = carWashVisit.startTimeUtc, let date = dateFormatter.date(from: published) else {
-			return nil
+	static func loadData() -> CarFit {
+		if let path = Bundle.main.path(forResource: "carfit", ofType: "json") {
+			do {
+				let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+				let decoder = JSONDecoder()
+				let carFit = try decoder.decode(CarFit.self, from: data)
+				return carFit
+			  } catch {
+				   // handle error
+				print("Load json data error")
+			  }
 		}
-		dateFormatter.dateFormat = "HH:mm"
-		return dateFormatter.string(from: date)
+		return CarFit(success: false, message: "Unable to load data", data: [])
 	}
 
-	var houseAddress:String? {
-		if let address = carWashVisit.houseOwnerAddress {
-			if let zip = carWashVisit.houseOwnerZip {
-				if let city = carWashVisit.houseOwnerCity {
-					return "\(address) \(zip) \(city)"
-				}
-				return "\(address) \(zip)"
-			}
-			return "\(address)"
-		}
-		return nil
-	}
-
-	var distance:String? {
-
-		guard let fromLat = carWashVisit.houseOwnerLatitude, let fromLong = carWashVisit.houseOwnerLongitude else {
-			return "0"
-		}
-
-		guard let toLat = carWashVisit.houseOwnerLatitude, let toLong = carWashVisit.houseOwnerLongitude else {
-			return "0"
-		}
-		//From location
-		let fromLocation = CLLocation(latitude: fromLat, longitude: fromLong)
-		//Next Visit location
-		let nextLocation = CLLocation(latitude: toLat, longitude: toLong)
-		//Measuring my distance to next visit location (in km)
-		let distance = fromLocation.distance(from: nextLocation) / 1000
-		//Display the result in km
-		return String(format: "%.01f", distance)
-	}
-
-	var title:String? {
-		let allTaskTitle = carWashVisit.tasks?.map({return $0.title ?? ""}) ?? []
-		return allTaskTitle.joined(separator: ", ")
-	}
-
-	var timeInMinutes:String? {
-		let allTaskTime = carWashVisit.tasks?.map({return $0.timesInMinutes ?? 0 }) ?? []
-		return "\(allTaskTime.reduce(0) {$0 + $1})"
+	var data:[HomeCellViewModel] {
+		self.visits
 	}
 }
