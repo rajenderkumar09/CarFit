@@ -29,15 +29,22 @@ class CalendarView: UIView {
         self.daysCollectionView.register(nib, forCellWithReuseIdentifier: self.cellID)
         self.daysCollectionView.delegate = self
         self.daysCollectionView.dataSource = self
-		self.daysCollectionView.scrollToItem(at: calendarViewModel.selectedIndexPath, at: .left, animated: true)
+		if let indexPath = calendarViewModel.selectedIndexPath {
+			self.daysCollectionView.scrollToItem(at: indexPath, at: .left, animated: true)
+		}
     }
     
     //MARK:- Change month when left and right arrow button tapped
     @IBAction func arrowTapped(_ sender: UIButton) {
-		calendarViewModel.changeMonth(adjustment: sender == rightBtn ? 1 : -1)
+		let dateAdjustment = sender == rightBtn ? 1 : -1
+		calendarViewModel.changeMonth(adjustment: dateAdjustment) { (date) in
+			self.delegate?.getSelectedDate(date)
+		}
 		self.monthAndYear.text = calendarViewModel.monthAndYear
+		if let indexPath = calendarViewModel.selectedIndexPath {
+			self.daysCollectionView.scrollToItem(at: indexPath, at: .left, animated: true)
+		}
 		self.daysCollectionView.reloadData()
-		self.daysCollectionView.scrollToItem(at: calendarViewModel.selectedIndexPath, at: .left, animated: true)
     }
 }
 
@@ -75,7 +82,6 @@ extension CalendarView: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         
     }
-    
 }
 
 //MARK:- Add calendar to the view

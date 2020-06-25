@@ -10,11 +10,7 @@ import Foundation
 
 class CalendarViewModel {
 	private var date = Date().datePart()
-	private var selectedDate: Date
-
-	init() {
-		self.selectedDate = date
-	}
+	private var selectedDate = Date().datePart()
 
 	private var year:Int {
 		return Calendar.current.component(.year, from: date)
@@ -23,7 +19,12 @@ class CalendarViewModel {
 		return Calendar.current.component(.month, from:  date)
 	}
 	private var day:Int {
-		return Calendar.current.component(.day, from:  date)
+		//Return day from selectedDate or date based on current month
+		if date.isCurrentMonth {
+			return Calendar.current.component(.day, from:  selectedDate)
+		} else {
+			return Calendar.current.component(.day, from:  date)
+		}
 	}
 
 	var numberOfDays:Int {
@@ -35,7 +36,7 @@ class CalendarViewModel {
 		return date?.toString(format: "MMM yyyy")
 	}
 
-	var selectedIndexPath:IndexPath {
+	var selectedIndexPath:IndexPath? {
 		return IndexPath(item: self.day-1, section: 0)
 	}
 
@@ -44,20 +45,26 @@ class CalendarViewModel {
 		return date!
 	}
 
-	func changeMonth(adjustment:Int) {
-		let newDate = self.date.adjustMonth(offset: adjustment)
-		if newDate.isCurrentMonth  {
-			self.date = Date()
-		} else {
-			self.date = newDate.startDateOfMonth()
-		}
-	}
-
 	var dateSelected:Date {
 		self.selectedDate
 	}
 
 	//Intent(s)
+	func changeMonth(adjustment:Int, didChangedSelectedDate:(_ date:String) -> Void) {
+		var newDate = self.date.adjustMonth(offset: adjustment)
+		if newDate.isCurrentMonth  {
+			newDate = Date().datePart()
+
+			//Change selected date if needed
+			//self.selectedDate = newDate
+		} else {
+			newDate = newDate.startDateOfMonth()
+		}
+		self.date = newDate
+		//Uncomment to change/update calendar data on month change
+		//didChangedSelectedDate(newDate.toString(format: "yyyy-MM-dd"))
+	}
+
 	func updateSelectedDate(date:Date, didChangedSelectedDate:(_ date:String) -> Void) {
 		self.selectedDate = date
 		didChangedSelectedDate(date.toString(format: "yyyy-MM-dd"))

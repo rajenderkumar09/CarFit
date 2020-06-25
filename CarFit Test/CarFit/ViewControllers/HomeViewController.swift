@@ -9,7 +9,7 @@ import UIKit
 
 class HomeViewController: UIViewController, AlertDisplayer {
 
-	var calendarListViewModel = CalendarListViewModel(date: "2020-06-24")
+	var calendarListViewModel = CalendarListViewModel()
 
 	lazy var workOrderTableTopConstraint = self.view.constraints.first { (constraint) -> Bool in
 		return constraint.identifier == "WorkOrderTableTopConstraint"
@@ -43,6 +43,10 @@ class HomeViewController: UIViewController, AlertDisplayer {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupUI()
+
+		//Initially load data for current date
+		calendarListViewModel.loadData(date: Date().toString(format: "yyyy-MM-dd"))
+		self.navBar.topItem?.title = "I DAG"
     }
     
     //MARK:- Add calender to view
@@ -114,6 +118,14 @@ class HomeViewController: UIViewController, AlertDisplayer {
 			self.workOrderTableView.transform = CGAffineTransform(translationX: 0, y: 120)
 		}
 	}
+
+	override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+		super.touchesEnded(touches, with: event)
+		guard self.calendarView.isHidden == false else {
+			return
+		}
+		animateCalendarView()
+	}
 }
 
 
@@ -126,19 +138,23 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
  
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: self.cellID, for: indexPath) as! HomeTableViewCell
-
 		cell.homeCellViewModel = calendarListViewModel.data[indexPath.row]
-
         return cell
     }
-    
 }
 
 //MARK:- Get selected calendar date
 extension HomeViewController: CalendarDelegate {
     
     func getSelectedDate(_ date: String) {
-        calendarListViewModel = CalendarListViewModel(date: date)
+
+		calendarListViewModel.loadData(date: date)
 		self.workOrderTableView.reloadData()
+
+		if date == Date().toString(format: "yyyy-MM-dd") {
+			self.navBar.topItem?.title = "I dag"
+		} else {
+			self.navBar.topItem?.title = date
+		}
     }
 }

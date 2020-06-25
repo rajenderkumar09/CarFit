@@ -19,7 +19,7 @@ struct DayCellViewModel {
 	}
 
 	var day:String? {
-		return self.date.toString(format: "dd")
+		return self.date.toString(format: "d")
 	}
 
 	var cellDate:Date {

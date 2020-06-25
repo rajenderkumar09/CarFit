@@ -10,10 +10,26 @@ import Foundation
 import CoreLocation
 
 class CalendarListViewModel {
-	private var carFit:CarFit = CalendarListViewModel.loadData()
-	private let visits:[HomeCellViewModel]
+	private var carFit:CarFit
+	private var visits:[HomeCellViewModel]?
 
-	init(date:String) {
+	init() {
+		if let path = Bundle.main.path(forResource: "carfit", ofType: "json") {
+			do {
+				let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+				let decoder = JSONDecoder()
+				let carFit = try decoder.decode(CarFit.self, from: data)
+				self.carFit = carFit
+			  } catch {
+				   // handle error
+				fatalError("Load json data error")
+			  }
+		} else {
+			fatalError("Error: Can not load data ")
+		}
+	}
+
+	func loadData(date:String) {
 		let visits = self.carFit.data.filter { (visit) -> Bool in
 			if let dateString = visit.startTimeUtc, let visitDate = dateString.date(format: "yyyy-MM-dd'T'hh:mm:ss") {
 				return date == visitDate.toString(format: "yyyy-MM-dd")
@@ -23,22 +39,7 @@ class CalendarListViewModel {
 		self.visits = visits.map({return HomeCellViewModel(visit: $0)})
 	}
 
-	static func loadData() -> CarFit {
-		if let path = Bundle.main.path(forResource: "carfit", ofType: "json") {
-			do {
-				let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
-				let decoder = JSONDecoder()
-				let carFit = try decoder.decode(CarFit.self, from: data)
-				return carFit
-			  } catch {
-				   // handle error
-				print("Load json data error")
-			  }
-		}
-		return CarFit(success: false, message: "Unable to load data", data: [])
-	}
-
 	var data:[HomeCellViewModel] {
-		self.visits
+		self.visits ?? []
 	}
 }
