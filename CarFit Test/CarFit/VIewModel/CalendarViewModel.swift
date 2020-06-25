@@ -8,7 +8,9 @@
 
 import Foundation
 
+//MARK: CalendarView ViewModel
 class CalendarViewModel {
+
 	private var date = Date().datePart()
 	private var selectedDate = Date().datePart()
 

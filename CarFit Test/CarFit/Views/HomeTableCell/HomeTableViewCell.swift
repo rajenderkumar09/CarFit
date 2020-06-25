@@ -10,28 +10,6 @@ import CoreLocation
 
 class HomeTableViewCell: UITableViewCell {
 
-	var homeCellViewModel:HomeCellViewModel! {
-		didSet {
-			self.customer.text = homeCellViewModel.houseOwnerName
-			self.status.text = homeCellViewModel.visitStatus
-			self.tasks.text = homeCellViewModel.title
-			self.arrivalTime.text = homeCellViewModel.startTime
-			self.destination.text = homeCellViewModel.houseAddress
-			self.timeRequired.text = homeCellViewModel.timeInMinutes
-			self.distance.text = homeCellViewModel.distance
-
-			//Update Status Color
-			if homeCellViewModel.visitStatus?.lowercased() == "done" {
-				self.statusView.backgroundColor = UIColor.doneOption
-			} else if homeCellViewModel.visitStatus?.lowercased() == "inprogress" {
-				self.statusView.backgroundColor = UIColor.inProgressOption
-			} else if homeCellViewModel.visitStatus?.lowercased() == "todo" {
-				self.statusView.backgroundColor = UIColor.todoOption
-			}
-		}
-	}
-
-
     @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var customer: UILabel!
     @IBOutlet weak var statusView: UIView!

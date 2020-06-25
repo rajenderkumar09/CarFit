@@ -14,7 +14,6 @@ extension Date {
 		let calendar = Calendar.current
 		let range = calendar.range(of: .day, in: .month, for: self)!
 		let numDays = range.count
-		print(numDays) // 31
 		return numDays
 	}
 

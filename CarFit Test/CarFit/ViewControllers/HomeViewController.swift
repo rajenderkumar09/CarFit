@@ -19,6 +19,8 @@ class HomeViewController: UIViewController, AlertDisplayer {
 		return constraint.identifier == "CalendarViewTopConstraint"
 	}
 
+	var refreshControl = UIRefreshControl()
+
     @IBOutlet var navBar: UINavigationBar!
 	@IBOutlet var calendarView: UIView! {
 		didSet {
@@ -44,9 +46,10 @@ class HomeViewController: UIViewController, AlertDisplayer {
         super.viewDidLoad()
         self.setupUI()
 
+		//Update handler
+		calendarListViewModel.updateHandler = viewModelDidUpdate(date:)
 		//Initially load data for current date
 		calendarListViewModel.loadData(date: Date().toString(format: "yyyy-MM-dd"))
-		self.navBar.topItem?.title = "I DAG"
     }
     
     //MARK:- Add calender to view
@@ -64,22 +67,41 @@ class HomeViewController: UIViewController, AlertDisplayer {
         self.workOrderTableView.rowHeight = UITableView.automaticDimension
         self.workOrderTableView.estimatedRowHeight = 170
 
+		//Setup pull to refresh control
+		self.workOrderTableView.refreshControl = refreshControl
+		refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+
 		//Set constrains initial values
 		self.workOrderTableTopConstraint?.constant = 20
 		self.calendarViewTopConstraint?.constant = -self.calendarView.frame.height
     }
-    
+
+	/// Method for updating view when view model has been updated
+	/// - Parameter date: String date for the selected calendar date
+	func viewModelDidUpdate(date:String) {
+		self.navBar.topItem?.title = calendarListViewModel.navigationTitle(for: date)
+		self.workOrderTableView.reloadData()
+	}
+
+	@objc func refresh(_ sender: AnyObject) {
+	   // Code to refresh table view
+		calendarListViewModel.loadData(date: Date().toString(format: "yyyy-MM-dd"))
+		refreshControl.endRefreshing()
+	}
+
     //MARK:- Show calendar when tapped, Hide the calendar when tapped outside the calendar view
     @IBAction func calendarTapped(_ sender: UIBarButtonItem) {
         animateCalendarView()
     }
 
+	/// Setup tap gesture to dismiss calendar view when tapped outside of calendar view
 	func setupTapGesture() {
 		let tap = UITapGestureRecognizer(target: self, action: #selector(animateCalendarView))
 		tap.name = "CalendarViewTapGesture"
 		self.workOrderTableView.addGestureRecognizer(tap)
 	}
 
+	/// Remove tap gesture
 	func removeTapGesture() {
 		//Remove added tap gesture
 		let gesture = self.workOrderTableView.gestureRecognizers?.first(where: { (gesture) -> Bool in
@@ -91,6 +113,7 @@ class HomeViewController: UIViewController, AlertDisplayer {
 		workOrderTableView.removeGestureRecognizer(tapGesture)
 	}
 
+	/// Method for displaying or hiding calendar view
 	@objc func animateCalendarView() {
 
 		//Remove tap gesture
@@ -133,12 +156,30 @@ class HomeViewController: UIViewController, AlertDisplayer {
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return calendarListViewModel.data.count
+		return calendarListViewModel.numberOfVisits
     }
  
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: self.cellID, for: indexPath) as! HomeTableViewCell
-		cell.homeCellViewModel = calendarListViewModel.data[indexPath.row]
+
+		let visitStatus = calendarListViewModel.visitStatus(at: indexPath.row)
+		cell.customer.text = calendarListViewModel.houseOwnerName(at: indexPath.row)
+		cell.status.text = visitStatus
+		cell.tasks.text = calendarListViewModel.title(at: indexPath.row)
+		cell.arrivalTime.text = calendarListViewModel.startTime(at: indexPath.row)
+		cell.destination.text = calendarListViewModel.houseAddress(at: indexPath.row)
+		cell.timeRequired.text = calendarListViewModel.timeInMinutes(at: indexPath.row)
+		cell.distance.text = calendarListViewModel.distance(at: indexPath.row)
+
+		//Update Status Color
+		if visitStatus?.lowercased() == "done" {
+			cell.statusView.backgroundColor = UIColor.doneOption
+		} else if visitStatus?.lowercased() == "inprogress" {
+			cell.statusView.backgroundColor = UIColor.inProgressOption
+		} else if visitStatus?.lowercased() == "todo" {
+			cell.statusView.backgroundColor = UIColor.todoOption
+		}
+
         return cell
     }
 }
@@ -147,14 +188,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 extension HomeViewController: CalendarDelegate {
     
     func getSelectedDate(_ date: String) {
-
 		calendarListViewModel.loadData(date: date)
-		self.workOrderTableView.reloadData()
-
-		if date == Date().toString(format: "yyyy-MM-dd") {
-			self.navBar.topItem?.title = "I dag"
-		} else {
-			self.navBar.topItem?.title = date
-		}
     }
 }
