@@ -48,6 +48,7 @@
 		9A76CF9824A218A4009246FB /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A76CF9724A218A4009246FB /* String+Extensions.swift */; };
 		9A76CF9A24A21BE3009246FB /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A76CF9924A21BE3009246FB /* CalendarViewModel.swift */; };
 		9A76CF9C24A22E9C009246FB /* DayCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A76CF9B24A22E9C009246FB /* DayCellViewModel.swift */; };
+		9ADB209724A6113400B053D0 /* HomeCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADB209624A6113400B053D0 /* HomeCellViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,6 +116,7 @@
 		9A76CF9724A218A4009246FB /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		9A76CF9924A21BE3009246FB /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
 		9A76CF9B24A22E9C009246FB /* DayCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCellViewModel.swift; sourceTree = "<group>"; };
+		9ADB209624A6113400B053D0 /* HomeCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeCellViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -280,6 +282,7 @@
 			isa = PBXGroup;
 			children = (
 				9A1E7F6E24A1134500401146 /* CalendarListViewModel.swift */,
+				9ADB209624A6113400B053D0 /* HomeCellViewModel.swift */,
 				9A76CF9924A21BE3009246FB /* CalendarViewModel.swift */,
 				9A76CF9B24A22E9C009246FB /* DayCellViewModel.swift */,
 			);
@@ -448,6 +451,7 @@
 				620DDEEB247E779700BBF31C /* CalendarView.swift in Sources */,
 				9A1E7F7B24A118C800401146 /* VisitMessage.swift in Sources */,
 				9A1E7F7324A1143D00401146 /* CarWashVisit.swift in Sources */,
+				9ADB209724A6113400B053D0 /* HomeCellViewModel.swift in Sources */,
 				9A76CF9C24A22E9C009246FB /* DayCellViewModel.swift in Sources */,
 				620DDEEF247E77A600BBF31C /* App+Extensions.swift in Sources */,
 				9A76CF9824A218A4009246FB /* String+Extensions.swift in Sources */,

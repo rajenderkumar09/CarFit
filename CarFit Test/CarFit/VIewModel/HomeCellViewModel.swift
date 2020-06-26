@@ -11,10 +11,12 @@ import CoreLocation
 
 struct HomeCellViewModel {
 
+	private let previousVisit:CarWashVisit?
 	private let carWashVisit:CarWashVisit
 
-	init(visit:CarWashVisit) {
+	init(visit:CarWashVisit, previousVisit:CarWashVisit?) {
 		self.carWashVisit = visit
+		self.previousVisit = previousVisit
 	}
 
 	var houseOwnerName:String? {
@@ -56,12 +58,12 @@ struct HomeCellViewModel {
 
 	var distance:String? {
 
-		guard let fromLat = carWashVisit.houseOwnerLatitude, let fromLong = carWashVisit.houseOwnerLongitude else {
-			return "0"
+		guard let previousVisit = self.previousVisit, let fromLat = previousVisit.houseOwnerLatitude, let fromLong = previousVisit.houseOwnerLongitude else {
+			return "0 km"
 		}
 
 		guard let toLat = carWashVisit.houseOwnerLatitude, let toLong = carWashVisit.houseOwnerLongitude else {
-			return "0"
+			return "0 km"
 		}
 		//From location
 		let fromLocation = CLLocation(latitude: fromLat, longitude: fromLong)
@@ -70,10 +72,10 @@ struct HomeCellViewModel {
 		//Measuring my distance to next visit location (in km)
 		let distance = fromLocation.distance(from: nextLocation) / 1000
 		//Display the result in km
-		return String(format: "%.01f", distance)
+		return String(format: "%.01f km", distance)
 	}
 
-	var title:String? {
+	var taskTitle:String? {
 		let allTaskTitle = carWashVisit.tasks?.map({return $0.title ?? ""}) ?? []
 		return allTaskTitle.joined(separator: ", ")
 	}

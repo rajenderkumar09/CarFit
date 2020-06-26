@@ -81,12 +81,12 @@ class HomeViewController: UIViewController, AlertDisplayer {
 	func viewModelDidUpdate(date:String) {
 		self.navBar.topItem?.title = calendarListViewModel.navigationTitle(for: date)
 		self.workOrderTableView.reloadData()
+		self.refreshControl.endRefreshing()
 	}
 
 	@objc func refresh(_ sender: AnyObject) {
 	   // Code to refresh table view
-		calendarListViewModel.loadData(date: Date().toString(format: "yyyy-MM-dd"))
-		refreshControl.endRefreshing()
+		calendarListViewModel.refresh()
 	}
 
     //MARK:- Show calendar when tapped, Hide the calendar when tapped outside the calendar view
@@ -162,23 +162,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: self.cellID, for: indexPath) as! HomeTableViewCell
 
-		let visitStatus = calendarListViewModel.visitStatus(at: indexPath.row)
-		cell.customer.text = calendarListViewModel.houseOwnerName(at: indexPath.row)
-		cell.status.text = visitStatus
-		cell.tasks.text = calendarListViewModel.title(at: indexPath.row)
-		cell.arrivalTime.text = calendarListViewModel.startTime(at: indexPath.row)
-		cell.destination.text = calendarListViewModel.houseAddress(at: indexPath.row)
-		cell.timeRequired.text = calendarListViewModel.timeInMinutes(at: indexPath.row)
-		cell.distance.text = calendarListViewModel.distance(at: indexPath.row)
-
-		//Update Status Color
-		if visitStatus?.lowercased() == "done" {
-			cell.statusView.backgroundColor = UIColor.doneOption
-		} else if visitStatus?.lowercased() == "inprogress" {
-			cell.statusView.backgroundColor = UIColor.inProgressOption
-		} else if visitStatus?.lowercased() == "todo" {
-			cell.statusView.backgroundColor = UIColor.todoOption
-		}
+		cell.homeCellViewModel = calendarListViewModel.homeCellViewModel(at: indexPath.row)
 
         return cell
     }
