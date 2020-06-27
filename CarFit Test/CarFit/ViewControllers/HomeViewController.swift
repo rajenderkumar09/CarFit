@@ -9,12 +9,15 @@ import UIKit
 
 class HomeViewController: UIViewController, AlertDisplayer {
 
+	//ViewModel for WorkOrder List
 	var cleanerListViewModel = CleanerListViewModel()
 
+	//Top margin constraint of WorkOrdertableView
 	lazy var workOrderTableTopConstraint = self.view.constraints.first { (constraint) -> Bool in
 		return constraint.identifier == "WorkOrderTableTopConstraint"
 	}
 
+	//Top margin constraint of CalendarView
 	lazy var calendarViewTopConstraint = self.view.constraints.first { (constraint) -> Bool in
 		return constraint.identifier == "CalendarViewTopConstraint"
 	}
@@ -45,11 +48,8 @@ class HomeViewController: UIViewController, AlertDisplayer {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupUI()
-
-		//Update handler
-		cleanerListViewModel.updateHandler = viewModelDidUpdate(date:)
-		//Initially load data for current date
-		cleanerListViewModel.loadData(date: Date().toString(format: "yyyy-MM-dd"))
+		self.addUpdateBinder()
+		self.loadWorkOrdersData()
     }
     
     //MARK:- Add calender to view
@@ -58,6 +58,16 @@ class HomeViewController: UIViewController, AlertDisplayer {
             calendar.delegate = self
         }
     }
+
+	func addUpdateBinder() {
+		//Set Update handler
+		cleanerListViewModel.updateHandler = viewModelDidUpdate(date:)
+	}
+
+	func loadWorkOrdersData() {
+		//Initially load data for current date
+		cleanerListViewModel.loadData(date: Date().toString(format: "yyyy-MM-dd"))
+	}
 
     //MARK:- UI setups
     private func setupUI() {
@@ -116,7 +126,7 @@ class HomeViewController: UIViewController, AlertDisplayer {
 	/// Method for displaying or hiding calendar view
 	@objc func animateCalendarView() {
 
-		//Remove tap gesture
+		//Remove tap gesture if there is already added, before adding to new one
 		self.removeTapGesture()
 
 		//Check CalendarView current state
@@ -142,6 +152,7 @@ class HomeViewController: UIViewController, AlertDisplayer {
 		}
 	}
 
+	//Listen for touches ended to dismiss the calendar view if its being displayed, otherwise ignore
 	override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
 		super.touchesEnded(touches, with: event)
 		guard self.calendarView.isHidden == false else {

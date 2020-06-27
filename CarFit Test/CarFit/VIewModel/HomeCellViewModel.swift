@@ -19,6 +19,7 @@ struct HomeCellViewModel {
 		self.previousVisit = previousVisit
 	}
 
+	//Retuns name of the owner by appending first and Last name
 	var houseOwnerName:String? {
 		if let firstName = carWashVisit.houseOwnerFirstName {
 			if let lastName = carWashVisit.houseOwnerLastName {
@@ -33,6 +34,7 @@ struct HomeCellViewModel {
 		return carWashVisit.visitState
 	}
 
+	//Returns time part only
 	var startTime:String? {
 		let dateFormatter = DateFormatter()
 		dateFormatter.dateFormat = "yyyy-MM-dd'T'hh:mm:ss"
@@ -43,6 +45,7 @@ struct HomeCellViewModel {
 		return dateFormatter.string(from: date)
 	}
 
+	//Format address
 	var houseAddress:String? {
 		if let address = carWashVisit.houseOwnerAddress {
 			if let zip = carWashVisit.houseOwnerZip {
@@ -56,6 +59,8 @@ struct HomeCellViewModel {
 		return nil
 	}
 
+
+	//Calculate distance between current and previous visit
 	var distance:String? {
 
 		guard let previousVisit = self.previousVisit, let fromLat = previousVisit.houseOwnerLatitude, let fromLong = previousVisit.houseOwnerLongitude else {
@@ -75,11 +80,13 @@ struct HomeCellViewModel {
 		return String(format: "%.01f km", distance)
 	}
 
+	//Append and return title of all the tasks in a visit
 	var taskTitle:String? {
 		let allTaskTitle = carWashVisit.tasks?.map({return $0.title ?? ""}) ?? []
 		return allTaskTitle.joined(separator: ", ")
 	}
 
+	//Return sum of all the tasks time in a visit
 	var timeInMinutes:String? {
 		let allTaskTime = carWashVisit.tasks?.map({return $0.timesInMinutes ?? 0 }) ?? []
 		return "\(allTaskTime.reduce(0) {$0 + $1})"

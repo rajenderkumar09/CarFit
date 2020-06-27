@@ -30,7 +30,7 @@ class CalendarViewModel {
 		}
 	}
 
-	//Update Handler
+	//Update Handler to notify CalendarView about date selection change
 	var didChange: (_ date:String) -> Void = { _ in }
 
 	var numberOfDays:Int {
@@ -66,6 +66,7 @@ class CalendarViewModel {
 		self.date = newDate
 	}
 
+	//Change selected date
 	func updateSelectedDate(date:Date) {
 		self.selectedDate = date
 		self.didChange(date.toString(format: "yyyy-MM-dd"))

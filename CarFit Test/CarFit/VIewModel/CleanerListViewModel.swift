@@ -22,10 +22,13 @@ class CleanerListViewModel {
 		self.carFit = Parser.parseAndLoadJSON()
 	}
 
+	/// Method for loading car wash visits data
+	/// - Parameter date: String formatted date, for which data will be loaded
 	func loadData(date:String) {
-		//Date
+		//Date - data will be loaded for
 		self.date = date
 
+		//filter data based on date
 		let visits = self.carFit?.data.filter { (visit) -> Bool in
 			if let dateString = visit.startTimeUtc, let visitDate = dateString.date(format: "yyyy-MM-dd'T'hh:mm:ss") {
 				return date == visitDate.toString(format: "yyyy-MM-dd")
@@ -43,6 +46,7 @@ class CleanerListViewModel {
 		self.updateHandler(date)
 	}
 
+	/// Method for reloading data for the existing date string
 	func refresh() {
 		guard let date = self.date else {
 			return
@@ -68,9 +72,10 @@ extension CleanerListViewModel {
 		return visits.count
     }
 
-
+	/// Method for returning Home cell view model object
+	/// - Parameter index: index of the object
+	/// - Returns: HomeCellViewModel object for the index passed in parameters
 	func homeCellViewModel(at index: Int) -> HomeCellViewModel? {
-
 		guard let visit = visits?[index] else {
 			return nil
 		}

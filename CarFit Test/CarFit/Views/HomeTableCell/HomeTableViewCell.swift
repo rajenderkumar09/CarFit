@@ -20,6 +20,7 @@ class HomeTableViewCell: UITableViewCell {
     @IBOutlet weak var timeRequired: UILabel!
     @IBOutlet weak var distance: UILabel!
 
+	//Cell viewModel- load data when set
 	var homeCellViewModel: HomeCellViewModel! {
 		didSet {
 			self.customer.text = homeCellViewModel.houseOwnerName
@@ -53,5 +54,4 @@ class HomeTableViewCell: UITableViewCell {
         self.statusView.layer.cornerRadius = self.status.frame.height / 2.0
         self.statusView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
     }
-
 }
