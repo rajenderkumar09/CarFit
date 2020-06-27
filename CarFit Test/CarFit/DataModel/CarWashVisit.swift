@@ -8,6 +8,14 @@
 
 import Foundation
 
+//Map visit state to enum of type string
+enum VisitState: String, Codable {
+	case Done
+	case ToDo
+	case InProgress
+	case Rejected
+}
+
 struct CarWashVisit: Codable {
 	var visitId: String?
 	var homeBobEmployeeId: String?
@@ -32,7 +40,7 @@ struct CarWashVisit: Codable {
 	var isSubscriber:  Bool?
 	var rememberAlways:  String?
 	var professional:  String?
-	var visitState:  String?
+	var visitState:  VisitState?
 	var stateOrder:  Int?
 	var expectedTime:  String?
 	var tasks:  [Task]?

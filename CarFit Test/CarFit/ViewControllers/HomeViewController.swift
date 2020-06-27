@@ -9,7 +9,7 @@ import UIKit
 
 class HomeViewController: UIViewController, AlertDisplayer {
 
-	var calendarListViewModel = CalendarListViewModel()
+	var cleanerListViewModel = CleanerListViewModel()
 
 	lazy var workOrderTableTopConstraint = self.view.constraints.first { (constraint) -> Bool in
 		return constraint.identifier == "WorkOrderTableTopConstraint"
@@ -47,9 +47,9 @@ class HomeViewController: UIViewController, AlertDisplayer {
         self.setupUI()
 
 		//Update handler
-		calendarListViewModel.updateHandler = viewModelDidUpdate(date:)
+		cleanerListViewModel.updateHandler = viewModelDidUpdate(date:)
 		//Initially load data for current date
-		calendarListViewModel.loadData(date: Date().toString(format: "yyyy-MM-dd"))
+		cleanerListViewModel.loadData(date: Date().toString(format: "yyyy-MM-dd"))
     }
     
     //MARK:- Add calender to view
@@ -79,14 +79,14 @@ class HomeViewController: UIViewController, AlertDisplayer {
 	/// Method for updating view when view model has been updated
 	/// - Parameter date: String date for the selected calendar date
 	func viewModelDidUpdate(date:String) {
-		self.navBar.topItem?.title = calendarListViewModel.navigationTitle(for: date)
+		self.navBar.topItem?.title = cleanerListViewModel.navigationTitle(for: date)
 		self.workOrderTableView.reloadData()
 		self.refreshControl.endRefreshing()
 	}
 
 	@objc func refresh(_ sender: AnyObject) {
 	   // Code to refresh table view
-		calendarListViewModel.refresh()
+		cleanerListViewModel.refresh()
 	}
 
     //MARK:- Show calendar when tapped, Hide the calendar when tapped outside the calendar view
@@ -156,13 +156,12 @@ class HomeViewController: UIViewController, AlertDisplayer {
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return calendarListViewModel.numberOfVisits
+		return cleanerListViewModel.numberOfVisits
     }
  
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: self.cellID, for: indexPath) as! HomeTableViewCell
-
-		cell.homeCellViewModel = calendarListViewModel.homeCellViewModel(at: indexPath.row)
+		cell.homeCellViewModel = cleanerListViewModel.homeCellViewModel(at: indexPath.row)
 
         return cell
     }
@@ -172,6 +171,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 extension HomeViewController: CalendarDelegate {
     
     func getSelectedDate(_ date: String) {
-		calendarListViewModel.loadData(date: date)
+		cleanerListViewModel.loadData(date: date)
     }
 }

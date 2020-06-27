@@ -1,5 +1,5 @@
 //
-//  CalendarListViewModel.swift
+//  CleanerListViewModel.swift
 //  CarFit
 //
 //  Created by Rajender Sharma on 22/06/20.
@@ -10,7 +10,7 @@ import Foundation
 import CoreLocation
 
 class CleanerListViewModel {
-	private var carFit:CarFit
+	private var carFit:CarFit?
 	private var visits:[HomeCellViewModel]?
 	private var date:String?
 
@@ -19,37 +19,25 @@ class CleanerListViewModel {
 	var updateHandler: (_ date:String) -> Void = { _ in }
 
 	init() {
-		if let path = Bundle.main.path(forResource: "carfit", ofType: "json") {
-			do {
-				let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
-				let decoder = JSONDecoder()
-				let carFit = try decoder.decode(CarFit.self, from: data)
-				self.carFit = carFit
-			  } catch {
-				   // handle error
-					fatalError("Load json data error")
-			  }
-		} else {
-			fatalError("Error: Can not load data ")
-		}
+		self.carFit = Parser.parseAndLoadJSON()
 	}
 
 	func loadData(date:String) {
 		//Date
 		self.date = date
 
-		let visits = self.carFit.data.filter { (visit) -> Bool in
+		let visits = self.carFit?.data.filter { (visit) -> Bool in
 			if let dateString = visit.startTimeUtc, let visitDate = dateString.date(format: "yyyy-MM-dd'T'hh:mm:ss") {
 				return date == visitDate.toString(format: "yyyy-MM-dd")
 			}
 			return false
 		}
 
-		self.visits = visits.enumerated().map { (index, visit) -> HomeCellViewModel in
+		self.visits = visits?.enumerated().map { (index, visit) -> HomeCellViewModel in
 			if index == 0 {
 				return HomeCellViewModel(visit: visit, previousVisit: nil)
 			} else {
-				return HomeCellViewModel(visit: visit, previousVisit: visits[index-1])
+				return HomeCellViewModel(visit: visit, previousVisit: visits?[index-1])
 			}
 		}
 		self.updateHandler(date)

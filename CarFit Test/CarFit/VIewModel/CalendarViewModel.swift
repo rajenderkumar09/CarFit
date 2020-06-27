@@ -20,6 +20,7 @@ class CalendarViewModel {
 	private var month:Int {
 		return Calendar.current.component(.month, from:  date)
 	}
+
 	private var day:Int {
 		//Return day from selectedDate or date based on current month
 		if date.isCurrentMonth {
@@ -28,6 +29,9 @@ class CalendarViewModel {
 			return Calendar.current.component(.day, from:  date)
 		}
 	}
+
+	//Update Handler
+	var didChange: (_ date:String) -> Void = { _ in }
 
 	var numberOfDays:Int {
 		return date.daysInMonth()
@@ -52,23 +56,18 @@ class CalendarViewModel {
 	}
 
 	//Intent(s)
-	func changeMonth(adjustment:Int, didChangedSelectedDate:(_ date:String) -> Void) {
+	func changeMonth(adjustment:Int) {
 		var newDate = self.date.adjustMonth(offset: adjustment)
 		if newDate.isCurrentMonth  {
 			newDate = Date().datePart()
-
-			//Change selected date if needed
-			//self.selectedDate = newDate
 		} else {
 			newDate = newDate.startDateOfMonth()
 		}
 		self.date = newDate
-		//Uncomment to change/update calendar data on month change
-		//didChangedSelectedDate(newDate.toString(format: "yyyy-MM-dd"))
 	}
 
-	func updateSelectedDate(date:Date, didChangedSelectedDate:(_ date:String) -> Void) {
+	func updateSelectedDate(date:Date) {
 		self.selectedDate = date
-		didChangedSelectedDate(date.toString(format: "yyyy-MM-dd"))
+		self.didChange(date.toString(format: "yyyy-MM-dd"))
 	}
 }

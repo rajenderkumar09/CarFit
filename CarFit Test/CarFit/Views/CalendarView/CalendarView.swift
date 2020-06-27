@@ -32,20 +32,27 @@ class CalendarView: UIView {
 		if let indexPath = calendarViewModel.selectedIndexPath {
 			self.daysCollectionView.scrollToItem(at: indexPath, at: .left, animated: true)
 		}
+
+		//Bind for updates
+		calendarViewModel.didChange = self.didChange
     }
     
     //MARK:- Change month when left and right arrow button tapped
     @IBAction func arrowTapped(_ sender: UIButton) {
 		let dateAdjustment = sender == rightBtn ? 1 : -1
-		calendarViewModel.changeMonth(adjustment: dateAdjustment) { (date) in
-			self.delegate?.getSelectedDate(date)
-		}
+		calendarViewModel.changeMonth(adjustment: dateAdjustment)
+    }
+
+	func didChange(date:String){
+
+		self.daysCollectionView.reloadData()
 		self.monthAndYear.text = calendarViewModel.monthAndYear
+		self.delegate?.getSelectedDate(date)
+
 		if let indexPath = calendarViewModel.selectedIndexPath {
 			self.daysCollectionView.scrollToItem(at: indexPath, at: .left, animated: true)
 		}
-		self.daysCollectionView.reloadData()
-    }
+	}
 }
 
 //MARK:- Calendar collection view delegate and datasource methods
@@ -73,10 +80,7 @@ extension CalendarView: UICollectionViewDataSource, UICollectionViewDelegate {
 		guard let cell = collectionView.cellForItem(at: indexPath) as? DayCell else {
 			return
 		}
-		calendarViewModel.updateSelectedDate(date: cell.dayCellViewModel.cellDate) { (dateString) in
-			self.delegate?.getSelectedDate(dateString)
-			collectionView.reloadData()
-		}
+		calendarViewModel.updateSelectedDate(date: cell.dayCellViewModel.cellDate)
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {

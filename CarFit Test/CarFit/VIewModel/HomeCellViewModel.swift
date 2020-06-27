@@ -29,7 +29,7 @@ struct HomeCellViewModel {
 		return nil
 	}
 
-	var visitStatus:String? {
+	var visitStatus:VisitState? {
 		return carWashVisit.visitState
 	}
 

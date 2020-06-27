@@ -23,7 +23,7 @@ class HomeTableViewCell: UITableViewCell {
 	var homeCellViewModel: HomeCellViewModel! {
 		didSet {
 			self.customer.text = homeCellViewModel.houseOwnerName
-			self.status.text = homeCellViewModel.visitStatus
+			self.status.text = homeCellViewModel.visitStatus?.rawValue
 			self.tasks.text = homeCellViewModel.taskTitle
 			self.arrivalTime.text = homeCellViewModel.startTime
 			self.destination.text = homeCellViewModel.houseAddress
@@ -31,12 +31,14 @@ class HomeTableViewCell: UITableViewCell {
 			self.distance.text = homeCellViewModel.distance
 
 			//Update Status Color
-			if homeCellViewModel.visitStatus?.lowercased() == "done" {
+			if homeCellViewModel.visitStatus == VisitState.Done {
 				self.statusView.backgroundColor = UIColor.doneOption
-			} else if homeCellViewModel.visitStatus?.lowercased() == "inprogress" {
+			} else if homeCellViewModel.visitStatus == VisitState.InProgress {
 				self.statusView.backgroundColor = UIColor.inProgressOption
-			} else if homeCellViewModel.visitStatus?.lowercased() == "todo" {
+			} else if homeCellViewModel.visitStatus == VisitState.ToDo {
 				self.statusView.backgroundColor = UIColor.todoOption
+			} else if homeCellViewModel.visitStatus == VisitState.Rejected {
+				self.statusView.backgroundColor = UIColor.rejectedOption
 			}
 		}
 	}
