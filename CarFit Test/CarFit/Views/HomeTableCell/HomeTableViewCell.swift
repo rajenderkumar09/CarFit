@@ -31,13 +31,17 @@ class HomeTableViewCell: UITableViewCell {
 			self.distance.text = homeCellViewModel.distance
 
 			//Update Status Color
-			if homeCellViewModel.visitStatus == VisitState.Done {
+			guard let state = homeCellViewModel.visitStatus else {
+				return
+			}
+			switch state {
+			case VisitState.Done:
 				self.statusView.backgroundColor = UIColor.doneOption
-			} else if homeCellViewModel.visitStatus == VisitState.InProgress {
+			case VisitState.InProgress:
 				self.statusView.backgroundColor = UIColor.inProgressOption
-			} else if homeCellViewModel.visitStatus == VisitState.ToDo {
+			case VisitState.ToDo:
 				self.statusView.backgroundColor = UIColor.todoOption
-			} else if homeCellViewModel.visitStatus == VisitState.Rejected {
+			case VisitState.Rejected:
 				self.statusView.backgroundColor = UIColor.rejectedOption
 			}
 		}
