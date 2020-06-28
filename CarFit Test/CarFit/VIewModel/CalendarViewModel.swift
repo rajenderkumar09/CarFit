@@ -64,6 +64,9 @@ class CalendarViewModel {
 			newDate = newDate.startDateOfMonth()
 		}
 		self.date = newDate
+
+		//Pass selected date to didChange method as we want work order list for the selected date until any other is date is tapped by user
+		self.didChange(selectedDate.toString(format: "yyyy-MM-dd"))
 	}
 
 	//Change selected date
